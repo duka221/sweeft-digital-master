@@ -32,9 +32,7 @@ export const HomePage = () => {
       keepPreviousData: true,
       refetchOnWindowFocus: false,
       onSuccess: images => {
-        setFetchedSearch([])
-
-        setFetchedSearch(prev => [...prev, ...images])}
+      setFetchedSearch(prev => [...prev, ...images])}
     } 
   )
 
@@ -57,6 +55,12 @@ export const HomePage = () => {
     }
   }, [debouncedSearchQuery, images, isSuccess])
 
+    useEffect(()=>{
+      if (debouncedSearchQuery.length > 0 && searchQuery.length === 0 ){
+        setFetchedSearch([])
+      }
+
+    },[debouncedSearchQuery,searchQuery])
   if (isLoading) return <p>Loading...</p>
   if (error) return <p>Error</p>
 
